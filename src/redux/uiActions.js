@@ -10,7 +10,7 @@ export const stopLoading = () => ({
   payload: { isLoading: false }
 });
 
-export const logError = error => ({
+export const logError = (error) => ({
   type: UI_TYPES.UI_SET_ERROR,
   payload: {
     isErrored: true,

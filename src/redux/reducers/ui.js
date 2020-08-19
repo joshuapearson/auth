@@ -6,7 +6,7 @@ const defaultState = {
   error: {}
 };
 
-export default function(state = defaultState, action) {
+export default function (state = defaultState, action) {
   switch (action.type) {
     case UI_TYPES.UI_SET_LOADING: {
       const { isLoading = false } = action.payload;

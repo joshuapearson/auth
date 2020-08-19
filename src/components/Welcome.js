@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { startLoading } from '../redux/actions';
 
-const Auth = props => {
+const Auth = (props) => {
   return (
     <div>
       <span onClick={() => props.startLoading()}>Welcome</span>
@@ -21,10 +21,7 @@ const Auth = props => {
       </div>
     </div>
   );
-}
+};
 
 const mapStateToProps = ({ auth }) => ({ ...auth });
-export default connect(
-  mapStateToProps,
-  { startLoading }
-)(Auth);
+export default connect(mapStateToProps, { startLoading })(Auth);

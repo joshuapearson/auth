@@ -1,8 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { 
-  Account, AccountCreate, Authenticate, Deauthenticate, Error, Header, Loading, Welcome 
-} from './components'
+import {
+  Account,
+  AccountCreate,
+  Authenticate,
+  Deauthenticate,
+  Error,
+  Header,
+  Loading,
+  Welcome
+} from './components';
 import './App.css';
 
 function App() {
