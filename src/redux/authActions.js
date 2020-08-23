@@ -4,14 +4,14 @@ import {
   DEAUTHENTICATE_ENDPOINT,
   AUTHENTICATION_STATUS_ENDPOINT
 } from '../endpoints';
+import { generateFetchOptions } from '../utils/network';
 
 const requestAuthenticationStatus = () => ({
   type: AUTH_TYPES.AUTH_REQUEST_STATUS
 });
 
-const requestAuthenticate = (credentials) => ({
-  type: AUTH_TYPES.AUTH_REQUEST_AUTHENTICATE,
-  payload: credentials
+const requestAuthenticate = () => ({
+  type: AUTH_TYPES.AUTH_REQUEST_AUTHENTICATE
 });
 
 const receiveAuthenticate = (authorization) => ({
@@ -26,20 +26,20 @@ const requestDeauthenticate = () => ({
 export const checkAuthStatus = () => {
   return (dispatch) => {
     dispatch(requestAuthenticationStatus());
-    return fetch(AUTHENTICATION_STATUS_ENDPOINT)
+    return fetch(AUTHENTICATION_STATUS_ENDPOINT, generateFetchOptions())
       .then((response) => response.json())
-      .then((json) => dispatch(receiveAuthenticate(json)));
+      .then((json) => {
+        dispatch(receiveAuthenticate(json));
+      });
   };
 };
 
 export const authenticate = (credentials) => {
   return (dispatch) => {
-    dispatch(requestAuthenticate(credentials));
+    dispatch(requestAuthenticate());
     return fetch(AUTHENTICATE_ENDPOINT, {
+      ...generateFetchOptions(),
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
       body: JSON.stringify(credentials)
     })
       .then((response) => response.json())
