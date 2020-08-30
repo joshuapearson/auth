@@ -32,12 +32,17 @@ const Authenticate = (props) => {
             if (!values.pass) {
               errors.pass = 'Password Required';
             }
+            if (!values.totp) {
+              errors.totp = 'Security Code Required';
+            } else if (!values.totp.match(/\d{6}/)) {
+              errors.totp = 'Security Code Must Be 6 Digits';
+            }
 
             return errors;
           }}
           onSubmit={(values) => {
-            const { uname, pass } = values;
-            const creds = { uname, pass };
+            const { uname, pass, totp } = values;
+            const creds = { uname, pass, totp };
             doAuthenticate(creds);
           }}
         >
@@ -49,6 +54,10 @@ const Authenticate = (props) => {
             <div>
               <Field type="password" name="pass" placeholder="password" />
               <ErrorMessage name="pass" component="div" />
+            </div>
+            <div>
+              <Field type="text" name="totp" placeholder="security code" />
+              <ErrorMessage name="totp" component="div" />
             </div>
             <div>
               <button type="submit" disabled={isAuthenticating}>
