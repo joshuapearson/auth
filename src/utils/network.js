@@ -4,7 +4,7 @@ const CID_STORAGE_NAME = 'CLIENT_ID';
 export function generateHeaders(addIn = {}) {
   return {
     Accept: 'application/json',
-    'X-ClientId': getCID(),
+    'X-ClientId': getCID() || '',
     ...addIn
   };
 }

@@ -8,6 +8,10 @@ class Deauthenticate extends React.Component {
     this.props.deauth();
   }
 
+  componentWillUnmount() {
+    this.props.hideLoading();
+  }
+
   render() {
     const { isAuthenticated, isDeauthenticating } = this.props;
 

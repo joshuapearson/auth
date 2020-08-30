@@ -50,7 +50,7 @@ export const authenticate = (credentials) => {
 export const deauthenticate = () => {
   return (dispatch) => {
     dispatch(requestDeauthenticate());
-    return fetch(DEAUTHENTICATE_ENDPOINT)
+    return fetch(DEAUTHENTICATE_ENDPOINT, generateFetchOptions())
       .then((response) => response.json())
       .then((json) => dispatch(receiveAuthenticate(json)));
   };
