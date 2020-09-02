@@ -4,7 +4,10 @@ import {
   ACCOUNT_DETAIL_ENDPOINT,
   ACCOUNT_UPDATE_ENDPOINT
 } from '../endpoints';
-import { generateFetchOptions } from '../utils/network';
+import {
+  generateFetchOptions,
+  generateRegFetchOptions
+} from '../utils/network';
 
 const requestAccount = () => ({
   type: ACC_TYPES.ACC_REQUEST_ACCOUNT
@@ -48,7 +51,7 @@ export const createAccount = (account) => {
   return (dispatch) => {
     dispatch(requestAccountCreate());
     return fetch(ACCOUNT_CREATE_ENDPOINT, {
-      ...generateFetchOptions(),
+      ...generateRegFetchOptions(),
       method: 'POST',
       body: JSON.stringify(account)
     })

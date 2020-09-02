@@ -23,7 +23,7 @@ const Authenticate = (props) => {
     return (
       <div>
         <Formik
-          initialValues={{ uname: '', pass: '' }}
+          initialValues={{ uname: '', pass: '', totp: '' }}
           validate={(values) => {
             const errors = {};
             if (!values.uname) {
