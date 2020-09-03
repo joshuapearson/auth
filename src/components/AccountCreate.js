@@ -80,8 +80,10 @@ class AccountCreate extends React.Component {
   }
 
   submitAccountCreate(values) {
-    const { doCreateAccount } = this.props;
-    const acc = {
+    const { doCreateAccount, regSession = {} } = this.props;
+    const { phase = 'org' } = regSession;
+
+    let acc = {
       orgId: values.orgId,
       fname: values.fname,
       lname: values.lname,
@@ -90,6 +92,10 @@ class AccountCreate extends React.Component {
       pass: values.pass,
       totp: values.totp
     };
+    if (phase === ACCOUNT_CREATE_PHASE.CONFIRM) {
+      acc.confirm = true;
+    }
+
     doCreateAccount(acc);
   }
 
@@ -196,9 +202,8 @@ class AccountCreate extends React.Component {
               {phase === ACCOUNT_CREATE_PHASE.CONFIRM ? (
                 <>
                   <div>
-                    <button type="submit" name="confirm">
-                      create account
-                    </button>
+                    <input type="hidden" name="confirm" value="true" />
+                    <button type="submit">create account</button>
                   </div>
                 </>
               ) : null}

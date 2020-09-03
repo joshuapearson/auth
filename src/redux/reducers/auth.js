@@ -1,5 +1,5 @@
 import { AUTH_TYPES, ACC_TYPES } from '../actionTypes';
-import { setCID, setRegCID, clearCID } from '../../utils/network';
+import { setCID, setRegCID, clearCID, clearRegCID } from '../../utils/network';
 
 const defaultAuth = {
   cid: null,
@@ -74,17 +74,37 @@ export default function (state = defaultState, action) {
     }
     case ACC_TYPES.ACC_RECEIVE_ACCOUNT_CREATE: {
       const { payload = { regSession: defaultRegSess } } = action;
-      const { regSession, regErrors } = payload;
-      const { cid } = regSession;
-      clearCID();
-      setRegCID(cid);
+      const { regSession, regErrors, appSession } = payload;
 
-      return {
-        ...state,
-        regSession,
-        regErrors,
-        isCreatingAcc: false
-      };
+      if (appSession) {
+        const { cid } = appSession;
+        clearRegCID();
+        setCID(cid);
+
+        return {
+          ...state,
+          regSession,
+          regErrors,
+          authError: null,
+          auth: appSession,
+          isAuthenticated: true,
+          isDeauthenticating: false,
+          isAuthenticating: false,
+          isCheckingStatus: false,
+          isCreatingAcc: false
+        };
+      } else {
+        const { cid } = regSession;
+        clearCID();
+        setRegCID(cid);
+
+        return {
+          ...state,
+          regSession,
+          regErrors,
+          isCreatingAcc: false
+        };
+      }
     }
     case ACC_TYPES.ACC_REQUEST_ACCOUNT_UPDATE: {
       return {
