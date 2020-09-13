@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Welcome = (props) => {
   const { isAuthenticated } = props;
-  console.log(props);
+
   return (
     <div>
       <span>Welcome</span>
@@ -12,6 +12,9 @@ const Welcome = (props) => {
         <>
           <div>
             <Link to="/account">Account Details</Link>
+          </div>
+          <div>
+            <Link to="/organization">Organization Details</Link>
           </div>
           <div>
             <Link to="/deauthenticate">Log Out</Link>

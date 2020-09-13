@@ -45,3 +45,9 @@
 .App-link {
   color: #61dafb;
 }
+
+a,
+a:active,
+a:visited {
+  color: skyblue;
+}

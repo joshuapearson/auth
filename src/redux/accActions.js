@@ -1,8 +1,9 @@
-import { ACC_TYPES } from './actionTypes';
+import { ACC_TYPES, ORG_TYPES } from './actionTypes';
 import {
   ACCOUNT_CREATE_ENDPOINT,
   ACCOUNT_DETAIL_ENDPOINT,
-  ACCOUNT_UPDATE_ENDPOINT
+  ACCOUNT_UPDATE_ENDPOINT,
+  ORGANIZATION_DETAIL_ENDPOINT
 } from '../endpoints';
 import {
   generateFetchOptions,
@@ -70,5 +71,25 @@ export const updateAccount = (account) => {
     })
       .then((response) => response.json())
       .then((json) => dispatch(receiveAccountUpdate(json)));
+  };
+};
+
+const requestOrganization = () => ({
+  type: ORG_TYPES.ORG_REQUEST_ORGANIZATION
+});
+
+const receiveOrganization = (organization) => ({
+  type: ORG_TYPES.ORG_RECEIVE_ORGANIZATION,
+  payload: organization
+});
+
+export const fetchOrganization = () => {
+  return (dispatch) => {
+    dispatch(requestOrganization());
+    return fetch(ORGANIZATION_DETAIL_ENDPOINT, generateFetchOptions())
+      .then((response) => response.json())
+      .then((json) => {
+        dispatch(receiveOrganization(json));
+      });
   };
 };

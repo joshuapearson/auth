@@ -102,7 +102,12 @@ class AccountCreate extends React.Component {
   render() {
     console.log(this.props);
     const { isAuthenticated, regSession, regErrors = {} } = this.props;
-    const { org, phase = ACCOUNT_CREATE_PHASE.ORG, totpUri = '' } = regSession;
+    const {
+      org,
+      phase = ACCOUNT_CREATE_PHASE.ORG,
+      totpUri = '',
+      uname
+    } = regSession;
 
     if (isAuthenticated) {
       return <Redirect to="/" />;
@@ -131,7 +136,10 @@ class AccountCreate extends React.Component {
                   </div>
                 </div>
               ) : (
-                <div>Organization: {org.name}</div>
+                <div>
+                  <strong>Organization: </strong>
+                  {org.name}
+                </div>
               )}
 
               {phase === ACCOUNT_CREATE_PHASE.DEMOGRAPHIC ? (
@@ -169,6 +177,10 @@ class AccountCreate extends React.Component {
               {phase === ACCOUNT_CREATE_PHASE.CREDENTIALS ? (
                 <>
                   <div>
+                    <strong>username: </strong>
+                    {uname}
+                  </div>
+                  <div>
                     <Field type="password" name="pass" placeholder="password" />
                     <Field
                       type="password"
@@ -201,6 +213,7 @@ class AccountCreate extends React.Component {
               ) : null}
               {phase === ACCOUNT_CREATE_PHASE.CONFIRM ? (
                 <>
+                  <div>click below to create your new account and log in</div>
                   <div>
                     <input type="hidden" name="confirm" value="true" />
                     <button type="submit">create account</button>

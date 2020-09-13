@@ -9,6 +9,7 @@ import {
   Error,
   Header,
   Loading,
+  Organization,
   Welcome
 } from './components';
 import { checkAuthStatus, startLoading, stopLoading } from './redux/actions';
@@ -46,6 +47,9 @@ class App extends React.Component {
                 </Route>
                 <Route path="/authenticate">
                   <Authenticate />
+                </Route>
+                <Route path="/organization">
+                  <Organization />
                 </Route>
                 <Route path="/error">
                   <Error />

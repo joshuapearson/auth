@@ -1,4 +1,4 @@
-import { AUTH_TYPES, ACC_TYPES } from '../actionTypes';
+import { AUTH_TYPES, ACC_TYPES, ORG_TYPES } from '../actionTypes';
 import { setCID, setRegCID, clearCID, clearRegCID } from '../../utils/network';
 
 const defaultAuth = {
@@ -31,6 +31,11 @@ const defaultRegSess = {
   phase: 'org'
 };
 
+const defaultOrg = {
+  orgName: null,
+  orgMembers: []
+};
+
 const defaultState = {
   auth: defaultAuth,
   authError: null,
@@ -44,7 +49,10 @@ const defaultState = {
   regErrors: {},
   isFetchingAcc: false,
   isCreatingAcc: false,
-  isUpdatingAcc: false
+  isUpdatingAcc: false,
+  org: defaultOrg,
+  orgError: null,
+  isFetchingOrg: false
 };
 
 export default function (state = defaultState, action) {
@@ -170,6 +178,25 @@ export default function (state = defaultState, action) {
         isCheckingStatus: false
       };
     }
+
+    // ORGANIZATION ACTIONS
+    case ORG_TYPES.ORG_REQUEST_ORGANIZATION: {
+      return {
+        ...state,
+        isFetchingOrg: true
+      };
+    }
+    case ORG_TYPES.ORG_RECEIVE_ORGANIZATION: {
+      const { payload = { org: defaultOrg } } = action;
+      const { org, err } = payload;
+      return {
+        ...state,
+        org,
+        orgError: err,
+        isFetchingOrg: false
+      };
+    }
+
     default:
       return state;
   }

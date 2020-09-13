@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { fetchAccount, startLoading, stopLoading } from '../redux/actions';
+import { fetchOrganization, startLoading, stopLoading } from '../redux/actions';
 
-class Account extends React.Component {
+class Organization extends React.Component {
   componentDidMount() {
-    this.props.fetchAcc();
+    this.props.fetchOrg();
   }
 
   componentWillUnmount() {
@@ -13,8 +13,8 @@ class Account extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, isFetchingAcc, acc } = this.props;
-
+    const { isAuthenticated, isFetchingAcc, org = {} } = this.props;
+    const { orgName, orgMembers } = org;
     if (isFetchingAcc) {
       this.props.showLoading();
     } else {
@@ -24,21 +24,16 @@ class Account extends React.Component {
     if (!isAuthenticated) {
       return <Redirect to="/" />;
     } else {
-      if (acc.uid === null) {
-        return <div>Fetching Account</div>;
+      if (!orgName) {
+        return <div>Fetching Organization</div>;
       } else {
-        const { fname, lname, uname, email, created } = acc;
         return (
           <div>
             <div>
-              <strong>Username:</strong>
-              {uname}
+              <strong>Organization:</strong>
+              {orgName}
             </div>
-            <div>
-              {fname} {lname}
-            </div>
-            <div>{email}</div>
-            <div>{Date(created)}</div>
+            <div>{orgMembers.length} members</div>
           </div>
         );
       }
@@ -50,10 +45,10 @@ const mapStateToProps = ({ auth }) => ({ ...auth });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAcc: () => dispatch(fetchAccount()),
+    fetchOrg: () => dispatch(fetchOrganization()),
     showLoading: () => dispatch(startLoading()),
     hideLoading: () => dispatch(stopLoading())
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Account);
+export default connect(mapStateToProps, mapDispatchToProps)(Organization);
